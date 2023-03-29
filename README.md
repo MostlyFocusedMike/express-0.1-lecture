@@ -1,0 +1,2 @@
+# Lecture Concepts
+- Order matters!

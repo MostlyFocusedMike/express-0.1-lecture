@@ -1,20 +1,25 @@
+/* eslint-disable no-shadow */
+const path = require('path');
 const express = require('express');
-const Fellow = require('./fellow');
+const Fellow = require('./model-fellow');
 
 const app = express();
+app.use(express.json());
 
 app.use((req, res, next) => {
   const time = (new Date()).toLocaleString();
   console.log(`${req.method}: ${req.originalUrl} - ${time}`);
   next();
-})
+});
 
 app.use((req, res, next) => {
   req.Fellow = Fellow;
   next();
-})
+});
 
-app.use(express.json());
+const publicDir = path.join(__dirname, '..', 'public');
+const staticServer = express.static(publicDir);
+app.use(staticServer);
 
 app.get('/fellows', (req, res) => {
   res.send(req.Fellow.list());
@@ -34,20 +39,19 @@ app.patch('/fellows/:id', (req, res) => {
   } = req;
   const updatedFellow = Fellow.editName(Number(id), fellowName);
   if (!updatedFellow) return res.sendStatus(404);
-  
+
   res.send(updatedFellow);
-})
+});
 
 app.delete('/fellows/:id', (req, res) => {
   const { Fellow, params: { id } } = req;
   const didDelete = Fellow.delete(id);
   const statusCode = didDelete ? 204 : 404;
   res.sendStatus(statusCode);
+});
 
-})
-
-const port = process.env.PORT || 80;
-const host = process.env.HOST || '0.0.0.0';
+const port = process.env.PORT || 8080;
+const host = process.env.HOST || '127.0.0.1';
 
 app.listen(port, host, () => {
   console.log(`Server is now running on http://${host}:${port}`);
