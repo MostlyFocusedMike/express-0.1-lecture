@@ -1,0 +1,33 @@
+GET http://localhost/health
+
+########
+
+GET http://localhost/test&para=true
+
+###############
+GET http://localhost/fellows
+
+
+######################
+POST http://localhost/fellows
+Content-Type: application/json
+
+{
+    "fellowName": "Bill"
+}
+
+######################
+POST http://localhost/fellows
+Content-Type: application/json
+
+{
+    "fellowName": "Sarah"
+}
+
+######################
+PATCH http://localhost/fellows/2
+Content-Type: application/json
+
+{
+    "fellowName": "Sara"
+}
