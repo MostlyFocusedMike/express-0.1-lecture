@@ -1,4 +1,5 @@
 /* eslint-disable no-shadow */
+const path = require('path');
 const express = require('express');
 const Fellow = require('./model-fellow');
 
@@ -16,14 +17,22 @@ app.use((req, res, next) => {
   next();
 });
 
+const publicDir = path.join(__dirname, '..', 'public');
+const staticServer = express.static(publicDir);
+app.use(staticServer);
+
 app.get('/fellows', (req, res) => {
   res.send(req.Fellow.list());
+});
+
+app.get('/test', (req, res) => {
+  res.send("hello");
 });
 
 app.post('/fellows', (req, res) => {
   const { Fellow, body: { fellowName } } = req;
   const newFellow = new Fellow(fellowName);
-  res.status(201).send(newFellow);
+  res.status(201).json(newFellow);
 });
 
 app.patch('/fellows/:id', (req, res) => {
@@ -40,14 +49,9 @@ app.patch('/fellows/:id', (req, res) => {
 
 app.delete('/fellows/:id', (req, res) => {
   const { Fellow, params: { id } } = req;
-  const didDelete = Fellow.delete(id);
+  const didDelete = Fellow.delete(Number(id));
   const statusCode = didDelete ? 204 : 404;
   res.sendStatus(statusCode);
 });
 
-const port = process.env.PORT || 8080;
-const host = process.env.HOST || '127.0.0.1';
-
-app.listen(port, host, () => {
-  console.log(`Server is now running on http://${host}:${port}`);
-});
+module.exports = app;

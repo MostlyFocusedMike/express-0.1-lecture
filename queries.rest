@@ -31,3 +31,6 @@ Content-Type: application/json
 {
     "fellowName": "Sara"
 }
+
+######################
+DELETE http://localhost:8080/fellows/2

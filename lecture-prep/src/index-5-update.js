@@ -23,7 +23,7 @@ app.get('/fellows', (req, res) => {
 app.post('/fellows', (req, res) => {
   const { Fellow, body: { fellowName } } = req;
   const newFellow = new Fellow(fellowName);
-  res.status(201).send(newFellow);
+  res.status(201).json(newFellow);
 });
 
 app.patch('/fellows/:id', (req, res) => {

@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  res.json({ msg: 'Check the node console!' });
+  res.send({ msg: 'Check the node console!' });
 });
 
 const port = process.env.PORT || 8080;

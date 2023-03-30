@@ -28,7 +28,7 @@ app.get('/fellows', (req, res) => {
 app.post('/fellows', (req, res) => {
   const { Fellow, body: { fellowName } } = req;
   const newFellow = new Fellow(fellowName);
-  res.status(201).send(newFellow);
+  res.status(201).json(newFellow);
 });
 
 app.patch('/fellows/:id', (req, res) => {
@@ -45,7 +45,7 @@ app.patch('/fellows/:id', (req, res) => {
 
 app.delete('/fellows/:id', (req, res) => {
   const { Fellow, params: { id } } = req;
-  const didDelete = Fellow.delete(id);
+  const didDelete = Fellow.delete(Number(id));
   const statusCode = didDelete ? 204 : 404;
   res.sendStatus(statusCode);
 });

@@ -19,7 +19,6 @@ class Fellow {
   }
 
   static editName(id, newName) {
-    console.log(id, newName);
     const fellow = Fellow.find(id);
     if (!fellow) return null;
     fellow.name = newName;

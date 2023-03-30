@@ -7,9 +7,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/health', (req, res) => {
-  const { params, query } = req;
-  res.json({ params, query });
-  // res.json({ status: 'OK' });
+  res.send({ status: 'OK' });
 });
 
 const port = process.env.PORT || 8080;
